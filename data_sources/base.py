@@ -28,17 +28,19 @@ class DataSource(ABC):
         """
 
     @abstractmethod
-    def get_team_data(self, team_number: int):
-        """Retrieve data for a specific team
+    def get_team_info(self, team_number: int):
+        """Retrieve information about a specific team
         team_number: int
             The team you want to retrieve data for
         """
 
     @abstractmethod
-    def get_event_matches(self, event_code: str):
+    def get_event_matches(self, event_code: str, team_number: int | None = None):
         """Retrieve matches for a specific event
         event_code: str
             The eventcode for the event you want to retrieve match data from
+        team_number: int | None
+            The team you want to retrieve data for, if not provided will get all matches reguardless of teams
         """
 
     @abstractmethod
