@@ -62,6 +62,16 @@ class IndianaScoutingAllianceConnector(DataSource):
         if response.status_code == 200:
             return response.json()
 
+    def get_robot_notes(self, team_number, event_code=None):
+        notes_url = self.__build_ISA_robot_url(
+            "0011000000000000000000000000010000000000000000000000000000000000000000000000000000000000000",
+            [str(team_number)],
+            event_code,
+        )
+        response = requests.get(notes_url, headers=self.__headers)
+        if response.status_code == 200:
+            return response.json()
+
     def get_team_info(self, team_number):
         pass
 
