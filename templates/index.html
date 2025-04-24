@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Team Info Lookup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 4 CDN for quick, nice styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+
+        .main-container {
+            min-width: 50%;
+            max-width: 90%;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            padding: 32px 24px 24px 24px;
+        }
+
+        .result-box {
+            margin-top: 32px;
+            padding: 20px;
+            border-radius: 6px;
+            background: #e9ecef;
+            min-height: 60px;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Team Lookup</a>
+    </nav>
+    <div class="main-container">
+        <h2 class="mb-4 text-center">Lookup FRC Team Info</h2>
+        <form id="team-form">
+            <div class="form-group">
+                <label for="team-number">Enter Team Number</label>
+                <input type="number" class="form-control" id="team-number" name="team_number" min="1" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Get Team Info</button>
+        </form>
+        <h2>The following result is generated using an LLM, please note that anything said in the following block of
+            text does not reflect my own personal views and I do not vouch for it's accuracy.</h2>
+        <div id="result" class="result-box mt-4" style="display:none;"></div>
+
+        <div class="team-list-section">
+            <h4 class="mb-3">I have data about the following teams:</h4>
+            <div class="table-responsive">
+                <table class="table table-striped team-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Team</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>45</td>
+                            <td>TechnoKats Robotics Team</td>
+                            <td>Kokomo, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>71</td>
+                            <td>Team Hammond</td>
+                            <td>Hammond, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>135</td>
+                            <td>Penn Robotics Black Knights</td>
+                            <td>Mishawaka, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>234</td>
+                            <td>Cyber Blue</td>
+                            <td>Indianapolis, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>292</td>
+                            <td>PantherTech</td>
+                            <td>Russiaville, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>328</td>
+                            <td>Penn Robotics Golden Rooks</td>
+                            <td>Mishawaka, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>447</td>
+                            <td>Team Roboto</td>
+                            <td>Anderson, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>461</td>
+                            <td>Westside Boiler Invasion</td>
+                            <td>West Lafayette, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>829</td>
+                            <td>The Digital Goats</td>
+                            <td>Indianapolis, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>868</td>
+                            <td>TechHOUNDS</td>
+                            <td>Carmel, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>1018</td>
+                            <td>Pike RoboDevils</td>
+                            <td>Indianapolis, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>1024</td>
+                            <td>Kil-A-Bytes</td>
+                            <td>Indianapolis, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>1501</td>
+                            <td>Team THRUST</td>
+                            <td>Huntington, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>1741</td>
+                            <td>Red Alert</td>
+                            <td>Greenwood, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>1747</td>
+                            <td>Harrison Boiler Robotics</td>
+                            <td>West Lafayette, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>2171</td>
+                            <td>RoboDogs</td>
+                            <td>Crown Point, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>2197</td>
+                            <td>Las Pumas</td>
+                            <td>New Carlisle, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>3176</td>
+                            <td>Purple Precision</td>
+                            <td>Brownsburg, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>3487</td>
+                            <td>Red Pride Robotics</td>
+                            <td>Plainfield, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>3494</td>
+                            <td>The Quadrangles</td>
+                            <td>Bloomington, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>3940</td>
+                            <td>CyberTooth</td>
+                            <td>Kokomo, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>4272</td>
+                            <td>Maverick Robotics</td>
+                            <td>Lafayette, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>4485</td>
+                            <td>Tribe Tech Robotics</td>
+                            <td>Danville, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>4926</td>
+                            <td>GalacTech</td>
+                            <td>Columbus, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>5010</td>
+                            <td>Tiger Dynasty</td>
+                            <td>Fishers, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>5188</td>
+                            <td>Area 5188: Classified Robotics</td>
+                            <td>Terre Haute, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>5402</td>
+                            <td>Wreckless Robotics</td>
+                            <td>Loganpsport/Walton, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>5484</td>
+                            <td>Career Academy Robotics - Wolf Pack</td>
+                            <td>South Bend, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>6721</td>
+                            <td>Tindley Trailblazers</td>
+                            <td>Indianapolis, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>6956</td>
+                            <td>SHAM-ROCK-BOTICS ☘</td>
+                            <td>Westfield, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>7454</td>
+                            <td>Huskies on Hogs</td>
+                            <td>Evansville, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>7457</td>
+                            <td>suPURDUEper Robotics</td>
+                            <td>Indianapolis, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>7617</td>
+                            <td>RoboBlazers</td>
+                            <td>Carmel, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>7657</td>
+                            <td>ThunderBots</td>
+                            <td>Evansville, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>8103</td>
+                            <td>Knight Robotics</td>
+                            <td>Kendallville, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>8430</td>
+                            <td>The Hatch Batch</td>
+                            <td>Washington, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>10021</td>
+                            <td>Guerin Catholic Golden Gears</td>
+                            <td>Noblesville, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>10332</td>
+                            <td>Carroll Charger Robotics</td>
+                            <td>Fort Wayne, Indiana, USA</td>
+                        </tr>
+                        <tr>
+                            <td>10492</td>
+                            <td>Bosse BYTEForce</td>
+                            <td>Evansville, Indiana, USA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('team-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const teamNumber = document.getElementById('team-number').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="text-center text-muted">Loading...</div>';
+            fetch(`/team/${teamNumber}`, { signal: AbortSignal.timeout(50000000000) })
+                .then(response => response.text())
+                .then(rating => {
+                    resultDiv.innerHTML = rating;
+                })
+                .catch(err => {
+                    resultDiv.innerHTML = `<div class="alert alert-danger">Failed to fetch team info.</div>`;
+                });
+        });
+    </script>
+</body>
+
+</html>

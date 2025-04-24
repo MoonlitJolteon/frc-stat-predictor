@@ -1,0 +1,101 @@
+@startuml
+
+' Data Sources
+class DataSource {
+    {abstract} +get_status() : tuple[DataSourceStatus, dict]
+    {abstract} +get_team_info(team_number: int)
+    {abstract} +get_event_matches(event_code: str, team_number: int | None = None)
+    {abstract} +get_team_performance_metrics(team_number, event_code: str | None = None)
+}
+
+enum DataSourceStatus {
+    CONNECTED
+    UNAUTHENTICATED
+    NOT_FOUND
+}
+
+class TheBlueAllianceConnector {
+    +__init__(api_token: str, year: int = datetime.now().year)
+    +get_status() : tuple[DataSourceStatus, dict]
+    +get_team_info(team_number: int) : dict | None
+    +get_event_matches(event_code: str, team_number: int | None = None) : dict | None
+    +get_team_performance_metrics(team_number, event_code: str | None = None) : dict | None
+    -__calculate_auto_performance(performance: dict, match_points: dict, match_record: dict, alliance_data: dict, robot_position: int) : void
+    -__calculate_teleop_performance(performance: dict, match_points: dict, match_record: dict, alliance_data: dict, robot_position: int) : void
+    -__calculate_endgame_performance(performance: dict, match_points: dict, match_record: dict, alliance_data: dict, robot_position: int) : void
+}
+
+class IndianaScoutingAllianceConnector {
+    +__init__(api_token: str, year=datetime.now().year)
+    +get_status() : tuple[DataSourceStatus, dict]
+    +get_event_matches(event_code: str, team_number: int | None = None)
+    +get_robot_notes(team_number: int, event_code: str | None = None)
+    +get_team_info(team_number: int)
+    +get_team_performance_metrics(team_number, event_code: str | None = None)
+    -__build_ISA_robot_url(include_flags: str, teams: list = [], event_key: str = "") : str
+    -__build_ISA_human_url(include_flags: str, teams: list = [], event_key: str = "") : str
+}
+
+DataSourceStatus <|.. DataSource
+DataSource <|-- TheBlueAllianceConnector
+DataSource <|-- IndianaScoutingAllianceConnector
+
+' LLM Integration
+class AllianceSelectionAssistant {
+    +__init__(llm: OLLAMAConnector)
+    +select_alliance(teams: list, criteria: dict) : list
+}
+
+class OLLAMAConnector {
+    +__init__(model_name: str)
+    +generate_text(prompt: str) : str
+}
+
+class MatchPredictor {
+    +__init__(llm: OLLAMAConnector)
+    +predict_outcome(match_data: dict) : str
+}
+
+class TeamRatingGenerator {
+    +__init__(llm: OLLAMAConnector)
+    +rate_team(team_data: dict) : str
+}
+
+' Utils
+class ConfigurationManager {
+    +get_config(key: str) : any
+    +set_config(key: str, value: any)
+}
+
+class Logger {
+    +__init__(name: str)
+    +log(message: str, level: str)
+    +info(message: str)
+    +warning(message: str)
+    +error(message: str)
+    +debug(message: str)
+}
+
+' Main
+class FRCRatingApp {
+    +__init__()
+    +setup_routes() : void
+    +index()
+    +team_info(team_number: int)
+    +run(debug: bool = True) : void
+}
+
+' Relationships
+AllianceSelectionAssistant --> OLLAMAConnector : Has
+MatchPredictor --> OLLAMAConnector : Has
+TeamRatingGenerator --> OLLAMAConnector : Has
+
+FRCRatingApp --> ConfigurationManager : Uses
+FRCRatingApp --> Logger : Uses
+FRCRatingApp --> TheBlueAllianceConnector : Uses
+FRCRatingApp --> IndianaScoutingAllianceConnector : Uses
+FRCRatingApp --> AllianceSelectionAssistant : Uses
+FRCRatingApp --> MatchPredictor : Uses
+FRCRatingApp --> TeamRatingGenerator : Uses
+
+@enduml

@@ -1,6 +1,6 @@
 {
     "TBA_TOKEN": "Get your read API token here: https://www.thebluealliance.com/account",
     "USE_ISA_DATA": false,
-    "ISA_TOKEN": "If you are a member of the Indiana Scouting Alliance, put your token here. Reach out to the discord if you don't know how to get it",
-    "OLLAMA_MODEL": "dolphin-mixtral:latest"
+    "ISA_TOKEN": "If you are a member of the Indiana Scouting Alliance,put your token here. Reach out to the discord if you don't know how to get it",
+    "OLLAMA_MODEL": "llama2-uncensored:7b-chat-q2_K" 
 }
